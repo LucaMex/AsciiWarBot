@@ -45,11 +45,11 @@ public:
 
 	char id;
 	char stateId;		
-	int indexes[height][width] = {}; //1 if the grid cell belongs to the region
+	bool indexes[height][width] = {}; //1 if the grid cell belongs to the region
 	std::vector<char> closeRegionsIds;
 
 	void addIndex(int i, int j){
-		indexes[i][j] = 1;
+		indexes[i][j] = true;
 	}
 };
 
@@ -123,7 +123,7 @@ void updateGrid(State attacker, Region defender){
 
 	for(int i=0;i<height;i++){
 		for(int j=0;j<width;j++){
-			if(defender.indexes[i][j] == 1){
+			if(defender.indexes[i][j]){
 				grid[i][j] = attacker.id;
 			}
 		}
@@ -150,7 +150,7 @@ void printColoredGrid(char att, Region r){
 	for(int i=0;i<height;i++){
 		for(int j=0;j<width;j++){
 
-			if(r.indexes[i][j] == 1){
+			if(r.indexes[i][j]){
 				std::cout << KYEL <<grid[i][j] << RST;
 			}
 			else if(grid[i][j] == r.stateId){
@@ -180,7 +180,7 @@ void printRegion(Region r){ //only after region extension
 	std::cout<<std::endl;
 	for(int i=0;i<height;i++){
 		for(int j=0;j<width;j++){
-			if(r.indexes[i][j] == 1){
+			if(r.indexes[i][j]){
 				std::cout << grid[i][j];
 			}
 			else{
